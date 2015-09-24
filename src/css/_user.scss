@@ -1,0 +1,36 @@
+.wm-user {
+    @include f-bodyCopy;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    @include mq(tablet) {
+        position: absolute;
+        z-index: 10;
+        margin: 0 auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        width: 100%;
+    }
+
+    @each $bp in (tablet, desktop, leftCol, wide) {
+        @include mq($bp) {
+            max-width: map-get($mq-breakpoints, $bp);
+        }
+    }
+}
+
+.wm-user__inner {
+    padding: 10px;
+    background-color: white;
+
+    @include mq(mobileLandscape) {
+        padding: 20px;
+    }
+
+    @include mq(tablet) {
+        width: 280px;
+        margin: 0 0 0 auto;
+    }
+}

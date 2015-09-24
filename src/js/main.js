@@ -1,24 +1,25 @@
-import iframeMessenger from 'guardian/iframe-messenger'
 import reqwest from 'reqwest'
-import mainHTML from './text/main.html!text'
-import share from './lib/share'
 
-var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
+import map from './components/map'
+import user from './components/user'
+
+import mainHTML from './templates/main.html!text'
+
+const contentURL = 'https://interactive.guim.co.uk/docsdata-test/1f8nQa19Q0VMveMuPnfDFYBfh5IKRkP8APm5cLsyvXNk.json';
+
+function app(el, config, resp) {
+    map(el.querySelector('.wm-map'));
+}
 
 export function init(el, context, config, mediator) {
-    iframeMessenger.enableAutoResize();
-
-    el.innerHTML = mainHTML.replace(/%assetPath%/g, config.assetPath);
+    el.innerHTML = mainHTML;
+    user(el.querySelector('.wm-user'));
 
     reqwest({
-        url: 'http://ip.jsontest.com/',
+        url: contentURL,
         type: 'json',
         crossOrigin: true,
-        success: (resp) => el.querySelector('.test-msg').innerHTML = `Your IP address is ${resp.ip}`
+        success: resp => app(el, config, resp)
     });
 
-    [].slice.apply(el.querySelectorAll('.interactive-share')).forEach(shareEl => {
-        var network = shareEl.getAttribute('data-network');
-        shareEl.addEventListener('click',() => shareFn(network));
-    });
 }

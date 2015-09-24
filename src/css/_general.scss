@@ -1,8 +1,18 @@
+html {
+    @include mq(tablet) {
+        overflow-y: hidden;
+    }
+}
+
 body,
 figure.interactive {
     margin: 0;
     padding: 0;
     background-color: #dcdcdc;
+}
+
+p {
+    margin: 0 0 8px 0;
 }
 
 // Link styles don't exist on the app
@@ -19,22 +29,6 @@ a {
     }
 }
 
-.interactive-container {
-    margin: 0 auto;
-    box-sizing: border-box;
-    background-color: white;
-
-    padding: 10px;
-    @include mq(mobileLandscape) {
-        padding: 20px;
-    }
-
-    @each $bp in (tablet, desktop, leftCol, wide) {
-        @include mq($bp) {
-            max-width: map-get($mq-breakpoints, $bp);
-        }
-    }
-}
 
 .interactive-es6-headline {
 	@include fs-headline(5);
