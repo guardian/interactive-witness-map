@@ -83,6 +83,18 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    display: none;
+}
+
+.wm-contributions.type--all > .wm-contributions__item {
+    display: block;
+}
+
+@each $type in map-keys($types) {
+    .wm-contributions.type--#{$type} > .wm-contributions__item.type--#{$type} {
+        display: block;
+    }
 }
 
 .wm-contributions__item__name {

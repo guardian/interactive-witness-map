@@ -14,6 +14,9 @@ export default function User(el, contributions, onTypeChange) {
 
     madlib(el.querySelector('.js-location'), () => true, v => v, v => v, () => {});
 
+    var contributionsEl = el.querySelector('.js-contributions');
+    contributionsEl.classList.add('type--all');
+
     var enabledTypes = [];
     [].slice.apply(el.querySelectorAll('.js-type')).forEach(typeEl => {
         var type = typeEl.getAttribute('data-type');
@@ -24,6 +27,9 @@ export default function User(el, contributions, onTypeChange) {
             } else {
                 enabledTypes.push(type);
             }
+            contributionsEl.classList.toggle(`type--${type}`, index === -1);
+            contributionsEl.classList.toggle('type--all', enabledTypes.length === 0);
+
             onTypeChange(enabledTypes);
         });
     });

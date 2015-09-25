@@ -43,9 +43,9 @@
     </p>
 </div>
 <div class="wm-user__panel">
-    <ul class="wm-contributions">
+    <ul class="wm-contributions js-contributions">
         {{~it.contributions :contribution:i}}
-            <li class="wm-contributions__item">
+        <li class="wm-contributions__item{{~contribution.types :type:j}} type--{{=type}}{{~}}">
                 <h3 class="wm-contributions__item__name">{{=contribution.name}}</h3>
                 <p>
                     {{?contribution.link}}

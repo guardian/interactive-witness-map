@@ -5,6 +5,9 @@ import Map from './components/map'
 
 import mainHTML from './templates/main.html!text'
 
+// Polyfills
+import './lib/classList'
+
 const contentURL = 'https://interactive.guim.co.uk/docsdata-test/1f8nQa19Q0VMveMuPnfDFYBfh5IKRkP8APm5cLsyvXNk.json';
 
 export function init(el, context, config, mediator) {
