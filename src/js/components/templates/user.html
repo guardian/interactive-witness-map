@@ -1,8 +1,49 @@
-<div class="wm-user__inner">
-    <h1>Here</h1>
-    <p>
-        <button class="interactive-share" data-network="facebook"></button>
-        <button class="interactive-share" data-network="twitter"></button>
-        <button class="interactive-share" data-network="email"></button>
-    </p>
+<div class="wm-user wm-user--top">
+    <div class="wm-user__panel wm-user__panel--side">
+        <h2 class="wm-subtitle">Refugee crisis</h2>
+        <h1 class="wm-title">How can you help?</h1>
+        <p>Where do you live?<p>
+        <form class="wm-madlib wm-wage js-location">
+            <button class="wm-madlib__input__btn" type="button" tabindex="2">
+                <svg class="icon-clear" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path fill="currentColor" d="M21 9.8l-.8-.8-5.2 4.8-5.2-4.8-.8.8 4.8 5.2-4.8 5.2.8.8 5.2-4.8 5.2 4.8.8-.8-4.8-5.2 4.8-5.2"/></svg>
+                <svg class="icon-submit" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path fill="currentColor" d="M22.82 14.63l-7.62-7.63-.72.7 5.5 6.57h-13.98v1.46h13.97l-5.5 6.56.73.7 7.62-7.63v-.74"/></svg>
+            </button>
+            <div class="wm-madlib__input">
+                <input class="wm-madlib__input__text" tabindex="1" type="text" />
+            </div>
+        </form>
+        <ul class="wm-types">
+            {{~it.types :type:i}}
+                <li class="wm-types__type">
+                    <label>
+                        <input class="js-type" type="checkbox" data-type="{{=type}}">
+                        <span class="wm-type wm-type--{{=type}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 100 100">
+                                <polygon fill="currentColor" points="31.818,61.364 29.545,63.636 29.545,75 70.454,75 70.454,63.636 68.182,61.364    "/>
+                                <path fill="currentColor" d="M56.85,31.082C54.889,28.52,52.479,26.427,50,25c-2.479,1.427-4.889,3.52-6.85,6.082
+                                    c-2.684,3.506-4.524,7.888-4.524,12.646c0,5.578,1.585,10.027,4.524,13.135c1.106,1.169,2.404,2.148,3.882,2.925l1.263-1.263
+                                    V47.727h1.136L51.704,50v8.53l1.26,1.26c1.479-0.778,2.778-1.757,3.885-2.927c2.94-3.108,4.524-7.557,4.524-13.135
+                                    C61.374,38.97,59.534,34.588,56.85,31.082z"/>
+                            </svg>
+                            {{=type}}
+                        </span>
+                    </label>
+                </li>
+            {{~}}
+        </ul>
+        <p>
+            <button class="interactive-share" data-network="facebook"></button>
+            <button class="interactive-share" data-network="twitter"></button>
+            <button class="interactive-share" data-network="email"></button>
+        </p>
+    </div>
+</div>
+<div class="wm-user wm-user--bottom">
+    <ul class="wm-user__panel wm-user__panel--bottom wm-contributions">
+        {{~it.contributions :contribution:i}}
+            <li class="wm-contributions__item">
+                {{=contribution.name}}
+            </li>
+        {{~}}
+    </ul>
 </div>

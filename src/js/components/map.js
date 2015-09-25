@@ -2,13 +2,57 @@ import bowser from 'ded/bowser'
 import throttle from '../lib/throttle'
 import isMobile from '../lib/isMobile'
 
-function init(el, L) {
-    L.mapbox.accessToken = 'pk.eyJ1IjoiZ3VhcmRpYW4iLCJhIjoiNHk1bnF4OCJ9.25tK75EuDdgq5GxQKyD6Fg';
+const types = ['collection', 'drop-off', 'vigil', 'demonstration', 'other'];
 
-    var map = L.mapbox.map(el, 'guardian.lpneb1fp');
-}
+export default function Map(el, config, contributions) {
+    var map, markerPane;
+    var currentVisibleTypes = [], currentLatLng;
 
-export default function map(el) {
+    function init(L) {
+        L.mapbox.accessToken = 'pk.eyJ1IjoiZ3VhcmRpYW4iLCJhIjoiNHk1bnF4OCJ9.25tK75EuDdgq5GxQKyD6Fg';
+
+        var icons = {};
+        types.forEach(type => {
+            icons[type] = L.icon({
+                'iconUrl': `${config.assetPath}/assets/imgs/pin-${type}.png`,
+                'iconSize': [25, 41],
+                'iconAnchor': [13, 41],
+                'className': `wm-pin wm-pin--${type}`
+            });
+        });
+
+        map = L.mapbox.map(el, 'guardian.lpneb1fp', {
+            'zoom': 5,
+            'center': [49.93707, 8.54736]
+        });
+
+        contributions.filter(contrib => !isNaN(contrib.latlng[0])).forEach(contrib => {
+            var type = contrib.types[0] || 'other';
+            L.marker(contrib.latlng, {'icon': icons[type]}).addTo(map);
+        });
+
+        markerPane = map.getPanes().markerPane;
+
+        setVisibleTypes(currentVisibleTypes);
+        if (currentLatLng) setLatLng(currentLatLng);
+    }
+
+    var setVisibleTypes = this.setVisibleTypes = function (types) {
+        if (markerPane) {
+            markerPane.setAttribute('data-types', types.join(' '));
+        } else {
+            currentVisibleTypes = types;
+        }
+    };
+
+    var setLatLng = this.setLatLng = function (latlng) {
+        if (map) {
+            // TOOD: zoom to latlng
+        } else {
+            currentLatLng = latlng;
+        }
+    }
+
     // Stop resizing from showing address bar/keyboard but allow from hiding address bar
     var lastWidth, lastHeight = 0;
     function setContainerSize() {
@@ -26,10 +70,9 @@ export default function map(el) {
     link.setAttribute('type', 'text/css');
     link.setAttribute('href', 'https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css');
     document.querySelector('head').appendChild(link);
-    link.onload = () => console.log('loaded');
 
     var script = document.createElement('script');
     script.src = 'https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js';
-    script.onload = () => init(el, window.L);
+    script.onload = () => init(window.L);
     document.body.appendChild(script);
 }

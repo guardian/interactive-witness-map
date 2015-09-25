@@ -1,6 +1,15 @@
+$types: (
+    collection: #005689,
+    drop-off: blue,
+    vigil: green,
+    demonstration: red,
+    other: grey
+);
+
 @import "fonts";
 @import "mq";
 @import "general";
 @import "share";
 @import "map";
 @import "user";
+@import "madlib";

@@ -1,17 +1,23 @@
 .wm-user {
     @include f-bodyCopy;
-    margin: 0 auto;
-    box-sizing: border-box;
+    font-size: 18px;
+    line-height: 1.3;
 
     @include mq(tablet) {
         position: absolute;
         z-index: 10;
         margin: 0 auto;
-        top: 0;
         left: 0;
         right: 0;
         height: 0;
         width: 100%;
+
+        &.wm-user--top {
+            top: 0;
+        }
+        &.wm-user--bottom {
+            bottom: 0;
+        }
     }
 
     @each $bp in (tablet, desktop, leftCol, wide) {
@@ -21,16 +27,100 @@
     }
 }
 
-.wm-user__inner {
-    padding: 10px;
+.wm-user__panel {
     background-color: white;
 
+    padding: 10px;
     @include mq(mobileLandscape) {
         padding: 20px;
     }
 
-    @include mq(tablet) {
-        width: 280px;
-        margin: 0 0 0 auto;
+    &.wm-user__panel--bottom {
+        position: absolute;
+        bottom: 0;
+    }
+
+    &.wm-user__panel--side {
+        @include mq(tablet) {
+            width: 280px;
+            margin: 0 0 0 auto;
+        }
+    }
+}
+
+.wm-title {
+    @include fs-headline(6);
+    margin: 0 0 12px 0;
+}
+
+.wm-subtitle {
+    @include f-header;
+    font-size: 14px;
+    margin: 0 0 3px 0;
+    line-height: 1;
+}
+
+.wm-contributions {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+    width: 100%;
+    height: 200px;
+    white-space: nowrap;
+    overflow-x: scroll;
+    font-size: 0;
+}
+
+.wm-contributions__item {
+    display: inline-block;
+    font-size: 16px;
+    width: 300px;
+    height: 100%;
+}
+
+.wm-types {
+    @include fs-textSans(3);
+    list-style: none;
+    margin: 0 0 8px 0;
+    padding: 0;
+
+    &::before {
+        content: "Filter by";
+        display: block;
+        margin-bottom: 3px;
+    }
+}
+
+.wm-types__type {
+    padding: 0;
+    display: inline-block;
+
+    input[type=checkbox] {
+        display: none;
+    }
+
+    @each $type, $color in $types {
+        input[type=checkbox]:checked + .wm-type.wm-type--#{$type} {
+            color: white;
+            background-color: $color;
+        }
+    }
+
+    svg {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.wm-type {
+    padding: 4px 10px 4px 3px;
+    border-radius: 100px;
+    color: #767676;
+    background-color: #f1f1f1;
+    transition: all 0.1s ease-out;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #dfdfdf;
     }
 }

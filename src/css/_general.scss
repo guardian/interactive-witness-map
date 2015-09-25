@@ -8,11 +8,15 @@ body,
 figure.interactive {
     margin: 0;
     padding: 0;
+    color: #333;
     background-color: #dcdcdc;
 }
 
 p {
     margin: 0 0 8px 0;
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 // Link styles don't exist on the app
