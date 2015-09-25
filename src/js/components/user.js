@@ -32,4 +32,25 @@ export default function User(el, contributions, onTypeChange) {
         var network = shareEl.getAttribute('data-network');
         shareEl.addEventListener('click',() => shareFn(network));
     });
+
+    if ('geolocation' in navigator) {
+        let userLocationEl = el.querySelector('.js-gps');
+        userLocationEl.style.display = 'block';
+        userLocationEl.addEventListener('click', () => {
+            userLocationEl.removeAttribute('data-has-error');
+            userLocationEl.setAttribute('data-is-loading', '');
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                showPosition([position.coords.latitude, position.coords.longitude], () => {
+                    userLocationEl.removeAttribute('data-is-loading');
+                });
+            }, function (err) {
+                console.log(err);
+                userLocationEl.removeAttribute('data-is-loading');
+                userLocationEl.addAttribute('data-has-error', '');
+            });
+
+            userLocationEl.blur();
+        });
+    }
 }

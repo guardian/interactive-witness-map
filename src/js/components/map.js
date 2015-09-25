@@ -23,7 +23,8 @@ export default function Map(el, config, contributions) {
 
         map = L.mapbox.map(el, 'guardian.lpneb1fp', {
             'zoom': 5,
-            'center': [49.93707, 8.54736]
+            'center': [49.93707, 8.54736],
+            'zoomControl': false
         });
 
         contributions.filter(contrib => !isNaN(contrib.latlng[0])).forEach(contrib => {
