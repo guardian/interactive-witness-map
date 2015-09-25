@@ -67,7 +67,6 @@
     @include fs-textSans(2);
     display: block;
     box-sizing: border-box;
-    height: 110px;
     padding: 5px 10px;
     @include mq(mobileLandscape) {
         padding: 10px 20px;
@@ -133,6 +132,8 @@
     svg {
         display: inline-block;
         vertical-align: middle;
+        width: 25px;
+        height: 25px;
     }
 }
 
@@ -146,5 +147,32 @@
 
     &:hover {
         background-color: #dfdfdf;
+    }
+}
+
+.wm-type-bubbles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+    white-space: nowrap;
+    font-size: 0;
+    margin-left: 5px;
+}
+
+.wm-type-bubbles__type {
+    display: inline-block;
+    border: 1px solid #dcdcdc;
+    border-radius: 100px;
+    width: 3px;
+    height: 3px;
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
+@each $type, $color in $types {
+    .wm-type-bubbles__type--#{$type} {
+        background-color: $color;
+        border-color: $color;
     }
 }

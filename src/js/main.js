@@ -20,6 +20,7 @@ export function init(el, context, config, mediator) {
         success: resp => {
             resp.sheets.contributions.forEach(contribution => {
                 contribution.types = contribution.types.split(',');
+                if (contribution.other) contribution.types.push('other');
                 contribution.latlng = [parseFloat(contribution.latitude), parseFloat(contribution.longitude)];
             });
 

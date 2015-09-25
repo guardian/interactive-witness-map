@@ -15,8 +15,8 @@ export default function Map(el, config, contributions) {
         types.forEach(type => {
             icons[type] = L.icon({
                 'iconUrl': `${config.assetPath}/assets/imgs/pin-${type}.png`,
-                'iconSize': [25, 41],
-                'iconAnchor': [13, 41],
+                'iconSize': [30, 55],
+                'iconAnchor': [15, 55],
                 'className': `wm-pin wm-pin--${type}`
             });
         });
