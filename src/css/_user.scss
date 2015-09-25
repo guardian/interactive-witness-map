@@ -126,6 +126,9 @@
         input[type=checkbox]:checked + .wm-type.wm-type--#{$type} {
             color: white;
             background-color: $color;
+            svg {
+                color: white;
+            }
         }
     }
 
@@ -144,6 +147,12 @@
     background-color: #f1f1f1;
     transition: all 0.1s ease-out;
     cursor: pointer;
+
+    @each $type, $color in $types {
+        &.wm-type--#{$type} svg {
+            color: $color;
+        }
+    }
 
     &:hover {
         background-color: #dfdfdf;

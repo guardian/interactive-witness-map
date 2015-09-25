@@ -21,7 +21,7 @@ export default function Map(el, config, contributions) {
             });
         });
 
-        map = L.mapbox.map(el, 'guardian.lpneb1fp', {
+        map = L.mapbox.map(el, 'guardian.10dec3bb', {
             'zoom': 6,
             'center': [54.01422, -0.09887],
             'zoomControl': false
