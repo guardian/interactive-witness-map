@@ -22,10 +22,11 @@ export default function Map(el, config, contributions) {
         });
 
         map = L.mapbox.map(el, 'guardian.lpneb1fp', {
-            'zoom': 5,
-            'center': [49.93707, 8.54736],
+            'zoom': 6,
+            'center': [54.01422, -0.09887],
             'zoomControl': false
         });
+        window.map = map;
 
         contributions.filter(contrib => !isNaN(contrib.latlng[0])).forEach(contrib => {
             var type = contrib.types[0] || 'other';

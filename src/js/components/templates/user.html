@@ -49,11 +49,9 @@
                 <h3 class="wm-contributions__item__name">{{=contribution.name}}</h3>
                 <p>
                     {{?contribution.link}}
-                        <span style="white-space: nowrap"><a href="{{=contribution.link}}">{{=contribution.link}}</a></span>
-                        <br />
+                        <a href="{{=contribution.link}}">{{=contribution.link}}</a><br />
                     {{?}}
                     {{?contribution.contact}}
-                        Contact:
                         {{?contribution.contact.indexOf('@') >= 0}}
                             <a href="mailto:{{=contribution.contact}}">
                         {{?}}
@@ -63,6 +61,7 @@
                         {{?}}
                     {{?}}
                 </p>
+                <p style="color: #767676">{{=contribution.address}}</p>
             </li>
         {{~}}
     </ul>

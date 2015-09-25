@@ -59,7 +59,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 320px;
+    height: 310px;
     overflow-y: scroll;
 }
 
@@ -67,13 +67,19 @@
     @include fs-textSans(2);
     display: block;
     box-sizing: border-box;
-    height: 100px;
+    height: 110px;
     padding: 5px 10px;
     @include mq(mobileLandscape) {
         padding: 10px 20px;
     }
 
-    p {
+    border-top: 1px solid #dcdcdc;
+    &:first-child {
+        border-top: 0;
+    }
+
+    p, h3 {
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
