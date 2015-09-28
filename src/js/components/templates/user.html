@@ -80,19 +80,20 @@
 <div class="wm-user__panel">
     <ul class="wm-contributions js-contributions">
         {{~it.contributions :contribution:i}}
-            <li class="wm-contributions__item{{~contribution.types :type:j}} type--{{=type}}{{~}}">
+            <li class="wm-contributions__item js-contribution {{~contribution.types :type:j}} type--{{=type}}{{~}}">
                 <ul class="wm-type-bubbles">
                     {{~it.types :type:j}}
                         <li class="wm-type-bubbles__type {{?contribution.types.indexOf(type) > -1}}wm-type-bubbles__type--{{=type}}{{?}}"></li>
                     {{~}}
                 </ul>
                 <h3 class="wm-contributions__item__name">{{=contribution.name}}</h3>
-                <p>
-                    {{?contribution.link}}
-                        <a href="{{=contribution.link}}">{{=contribution.link}}</a>
-                    {{?}}
-                </p>
                 <p style="color: #767676">{{=contribution.address}}</p>
+                <div class="wm-contributions__item__detail">
+                    {{?contribution.link}}
+                        <p><a href="{{=contribution.link}}">{{=contribution.link}}</a></p>
+                    {{?}}
+                    <p style="white-space: normal">{{=contribution.description}}</p>
+                </div>
             </li>
         {{~}}
     </ul>

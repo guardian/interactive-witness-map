@@ -29,8 +29,9 @@ export function init(el, context, config, mediator) {
     });
 
     function app(contributions) {
-        // TODO: show contributions
-        var map = new Map(el.querySelector('.js-map'), config, contributions);
-        var user = new User(el.querySelector('.js-user'), contributions, map.setVisibleTypes);
+        var user = new User(el.querySelector('.js-user'), contributions,
+                types => map.setVisibleTypes(types));
+        var map = new Map(el.querySelector('.js-map'), config, contributions,
+                contributionId => user.showContribution(contributionId));
     }
 }

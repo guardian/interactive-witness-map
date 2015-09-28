@@ -1,15 +1,20 @@
 import doT from 'olado/doT'
 import share from '../lib/share'
 import madlib from '../lib/madlib'
+import scrollTo from '../lib/scrollTo'
+import sendEvent from '../lib/event'
 
 import template from './templates/user.html!text'
 
 const types = ['collection', 'drop-off', 'vigil', 'demonstration', 'other'];
 
 var templateFn = doT.template(template);
+
 var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
 
 export default function User(el, contributions, onTypeChange) {
+    var $$ = s => [].slice.apply(el.querySelectorAll(s));
+
     el.innerHTML = templateFn({contributions, types});
 
     madlib(el.querySelector('.js-location'), () => true, v => v, v => v, () => {});
@@ -18,7 +23,7 @@ export default function User(el, contributions, onTypeChange) {
     contributionsEl.classList.add('type--all');
 
     var enabledTypes = [];
-    [].slice.apply(el.querySelectorAll('.js-type')).forEach(typeEl => {
+    $$('.js-type').forEach(typeEl => {
         var type = typeEl.getAttribute('data-type');
         typeEl.addEventListener('click', () => {
             var index = enabledTypes.indexOf(type);
@@ -34,7 +39,26 @@ export default function User(el, contributions, onTypeChange) {
         });
     });
 
-    [].slice.apply(el.querySelectorAll('.interactive-share')).forEach(shareEl => {
+    var contributionEls = $$('.js-contribution');
+    contributionEls.forEach((contributionEl, contributionId) => {
+        contributionEl.addEventListener('click', () => sendEvent('contribution', {'id': contributionId}));
+    });
+
+    var currentContributionEl;
+    window.addEventListener('contribution', evt => {
+        var contributionEl = contributionEls[evt.detail.id];
+        if (currentContributionEl && currentContributionEl !== contributionEl) {
+            currentContributionEl.classList.remove('is-selected');
+        }
+
+        scrollTo(contributionsEl.scrollTop, contributionEl.offsetTop,
+            y => contributionsEl.scrollTop = y);
+
+        currentContributionEl = contributionEl;
+        contributionEl.classList.add('is-selected');
+    });
+
+    $$('.interactive-share').forEach(shareEl => {
         var network = shareEl.getAttribute('data-network');
         shareEl.addEventListener('click',() => shareFn(network));
     });

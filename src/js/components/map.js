@@ -1,6 +1,7 @@
 import bowser from 'ded/bowser'
 import throttle from '../lib/throttle'
 import isMobile from '../lib/isMobile'
+import sendEvent from '../lib/event'
 
 const types = ['collection', 'drop-off', 'vigil', 'demonstration', 'other'];
 
@@ -15,8 +16,8 @@ export default function Map(el, config, contributions) {
         types.forEach(type => {
             icons[type] = L.icon({
                 'iconUrl': `${config.assetPath}/assets/imgs/pin-${type}.png`,
-                'iconSize': [30, 55],
-                'iconAnchor': [15, 55],
+                'iconSize': [25, 31],
+                'iconAnchor': [13, 31],
                 'className': `wm-pin wm-pin--${type}`
             });
         });
@@ -28,9 +29,13 @@ export default function Map(el, config, contributions) {
         });
         window.map = map;
 
-        contributions.filter(contrib => !isNaN(contrib.latlng[0])).forEach(contrib => {
-            var type = contrib.types[0] || 'other';
-            L.marker(contrib.latlng, {'icon': icons[type]}).addTo(map);
+        contributions.forEach((contrib, contributionId) => {
+            if (!isNaN(contrib.latlng[0])) {
+                var type = contrib.types[0] || 'other';
+                L.marker(contrib.latlng, {'icon': icons[type]}).addTo(map).on('click', () => {
+                    sendEvent('contribution', {'id': contributionId});
+                });
+            }
         });
 
         markerPane = map.getPanes().markerPane;
