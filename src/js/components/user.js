@@ -79,9 +79,8 @@ export default function User(el, contributions, onTypeChange) {
             userLocationEl.setAttribute('data-is-loading', '');
 
             navigator.geolocation.getCurrentPosition(function (position) {
-                showPosition([position.coords.latitude, position.coords.longitude], () => {
-                    userLocationEl.removeAttribute('data-is-loading');
-                });
+                sendEvent('location', {'latlng': [position.coords.latitude, position.coords.longitude]});
+                userLocationEl.removeAttribute('data-is-loading');
             }, function (err) {
                 console.log(err);
                 userLocationEl.removeAttribute('data-is-loading');
