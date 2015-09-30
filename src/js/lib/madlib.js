@@ -31,7 +31,7 @@ export default function (el, onchange) {
         if (btn.hasAttribute('data-focus')) {
             submit();
         } else {
-            text.value = '';
+            currentValue = text.value = '';
             text.focus();
         }
     });
