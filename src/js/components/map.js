@@ -6,7 +6,7 @@ import sendEvent from '../lib/event'
 const types = ['collection', 'drop-off', 'vigil', 'demonstration', 'other'];
 
 export default function Map(el, config, contributions) {
-    var map, markerPane;
+    var map, overlayPane;
     var currentVisibleTypes = [], currentLatLng;
 
     function init(L) {
@@ -41,35 +41,45 @@ export default function Map(el, config, contributions) {
         var contributionMarkers = contributions.map((contrib, contributionId) => {
             var type = contrib.types[0] || 'other';
             // TODO: support icons[type]
-            if (!isNaN(contrib.latlng[0]) && icons[type]) {
-                var marker = L.marker(contrib.latlng, {'icon': icons[type]}).addTo(map);
-                marker.on('click', () => {
+            if (contrib.latlng[0] && icons[type]) {
+                return L.circleMarker(contrib.latlng, {
+                    'className': 'wm-pin wm-pin--' + type,
+                    'radius': 7,
+                    'stroke': false
+                }).addTo(map).on('click', () => {
                     sendEvent('contribution', {'id': contributionId});
                 });
-                return marker;
             }
             return undefined;
         });
 
+        var selectedMarker;
         window.addEventListener('contribution', evt => {
             var contrib = contributions[evt.detail.id];
-            if (!isNaN(contrib.latlng[0])) {
-                var type = contrib.types[0] || 'other';
-                var marker = L.marker(contrib.latlng, {'pane': 'popupPane', 'icon': icons[type]}).addTo(map);
-                markerPane.classList.add('has-selected');
-                console.log(contributionMarkers[evt.detail.id]);
+            var marker = contributionMarkers[evt.detail.id];
+            if (marker) {
+                map.flyTo(contrib.latlng);
+
+                if (selectedMarker) {
+                    selectedMarker.setRadius(7);
+                    selectedMarker.getElement().classList.remove('is-selected');
+                }
+                marker.setRadius(14);
+                marker.getElement().classList.add('is-selected');
+                marker.bringToFront();
+                selectedMarker = marker;
             }
         });
 
-        markerPane = map.getPanes().markerPane;
+        overlayPane = map.getPane('overlayPane');
 
         setVisibleTypes(currentVisibleTypes);
         if (currentLatLng) setLatLng(currentLatLng);
     }
 
     var setVisibleTypes = this.setVisibleTypes = function (types) {
-        if (markerPane) {
-            markerPane.setAttribute('data-types', types.join(' '));
+        if (overlayPane) {
+            overlayPane.setAttribute('data-types', types.join(' '));
         } else {
             currentVisibleTypes = types;
         }
@@ -77,7 +87,7 @@ export default function Map(el, config, contributions) {
 
     var setLatLng = this.setLatLng = function (latlng) {
         if (map) {
-            // TOOD: zoom to latlng
+            map.flyTo(latlng, 10);
         } else {
             currentLatLng = latlng;
         }

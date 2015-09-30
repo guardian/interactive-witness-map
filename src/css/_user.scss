@@ -78,7 +78,7 @@
 
     cursor: pointer;
     &:hover {
-        background-color: #f1f1f1;
+        background-color: #f6f6f6;
     }
 
     border-bottom: 1px solid #dcdcdc;
@@ -93,6 +93,10 @@
     }
 
     display: none;
+
+    &.is-selected {
+        background-color: #f1f1f1;
+    }
 }
 
 .wm-contributions.type--all > .wm-contributions__item {
@@ -123,11 +127,13 @@
     list-style: none;
     margin: 0 0 8px 0;
     padding: 0;
+    line-height: 25px;
 
     &::before {
         content: "Filter by";
         display: block;
         margin-bottom: 3px;
+        line-height: 1;
     }
 }
 

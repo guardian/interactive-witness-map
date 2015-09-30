@@ -13,29 +13,44 @@
     display: none;
 }
 
-// To override .leaflet-marker-icon style
-.wm-pin.wm-pin {
-    display: none;
+.wm-pin {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+
+    stroke: white;
+    stroke-width: 1;
+    fill-opacity: 1;
+
+    @each $type, $color in $types {
+        &.wm-pin--#{$type} {
+            fill: $color;
+        }
+    }
+
+    &.is-selected {
+        stroke: #333;
+        stroke-width: 2;
+    }
 }
 
-.leaflet-marker-pane {
+.leaflet-overlay-pane {
     transition: opacity 0.2s ease-out;
 
     &.has-selected {
         opacity: 0.5;
     }
 
-    &[data-types=''] > .wm-pin {
-        display: block;
+    &[data-types=''] .wm-pin {
+        opacity: 0.8;
     }
 
     @each $type in map-keys($types) {
-        &[data-types~='#{$type}'] > .wm-pin--#{$type} {
-            display: block;
+        &[data-types~='#{$type}'] .wm-pin--#{$type} {
+            opacity: 0.8;
         }
     }
 }
 
-.leaflet-popup-pane > .wm-pin {
+.leaflet-popup-pane .wm-pin {
     display: block;
 }
