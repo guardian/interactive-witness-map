@@ -6,8 +6,7 @@ import sendEvent from '../lib/event'
 const types = ['collection', 'drop-off', 'vigil', 'demonstration', 'other'];
 
 export default function Map(el, config, contributions) {
-    var map, overlayPane;
-    var currentVisibleTypes = [], currentLatLng;
+    var map, overlayPane, currentVisibleTypes = [];
 
     function init(L) {
         var icons = {};
@@ -71,10 +70,13 @@ export default function Map(el, config, contributions) {
             }
         });
 
+        window.addEventListener('location', evt => {
+            map.flyTo(evt.detail.latlng, 10);
+        });
+
         overlayPane = map.getPane('overlayPane');
 
         setVisibleTypes(currentVisibleTypes);
-        if (currentLatLng) setLatLng(currentLatLng);
     }
 
     var setVisibleTypes = this.setVisibleTypes = function (types) {
@@ -84,14 +86,6 @@ export default function Map(el, config, contributions) {
             currentVisibleTypes = types;
         }
     };
-
-    var setLatLng = this.setLatLng = function (latlng) {
-        if (map) {
-            map.flyTo(latlng, 10);
-        } else {
-            currentLatLng = latlng;
-        }
-    }
 
     // Stop resizing from showing address bar/keyboard but allow from hiding address bar
     var lastWidth, lastHeight = 0;

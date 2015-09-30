@@ -3,6 +3,7 @@ import share from '../lib/share'
 import madlib from '../lib/madlib'
 import scrollTo from '../lib/scrollTo'
 import sendEvent from '../lib/event'
+import geocode from '../lib/geocode'
 
 import template from './templates/user.html!text'
 
@@ -17,7 +18,14 @@ export default function User(el, contributions, onTypeChange) {
 
     el.innerHTML = templateFn({contributions, types});
 
-    madlib(el.querySelector('.js-location'), () => true, v => v, v => v, () => {});
+    madlib(el.querySelector('.js-location'), loc => {
+        geocode(loc, (err, resp) => {
+            if (!err) {
+                var center = resp.features[0].center;
+                sendEvent('location', {'latlng': [center[1], center[0]]});
+            }
+        });
+    });
 
     var contributionsEl = el.querySelector('.js-contributions');
     contributionsEl.classList.add('type--all');

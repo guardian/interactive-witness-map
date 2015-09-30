@@ -1,8 +1,10 @@
 export default function (el, onchange) {
     var text = el.querySelector('.wm-madlib__input__text');
     var btn = el.querySelector('.wm-madlib__input__btn');
+    var currentValue = '';
 
     function submit() {
+        currentValue = text.value;
         onchange(text.value);
         text.blur();
         btn.removeAttribute('data-focus');
@@ -13,7 +15,7 @@ export default function (el, onchange) {
         // Wait for new activeElement
         setTimeout(() => {
             if (document.activeElement !== btn) {
-                text.value = '';
+                text.value = currentValue;
                 btn.removeAttribute('data-focus');
             }
         }, 0);
