@@ -10,8 +10,6 @@ export default function Map(el, config, contributions) {
     var currentVisibleTypes = [], currentLatLng;
 
     function init(L) {
-        L.mapbox.accessToken = 'pk.eyJ1IjoiZ3VhcmRpYW4iLCJhIjoiNHk1bnF4OCJ9.25tK75EuDdgq5GxQKyD6Fg';
-
         var icons = {};
         types.forEach(type => {
             icons[type] = L.icon({
@@ -22,19 +20,44 @@ export default function Map(el, config, contributions) {
             });
         });
 
-        map = L.mapbox.map(el, 'guardian.10dec3bb', {
+        map = L.map(el, {
             'zoom': 6,
+            'minZoom': 4,
+            'maxZoom': 14,
             'center': [54.01422, -0.09887],
             'zoomControl': false
         });
-        window.map = map;
 
-        contributions.forEach((contrib, contributionId) => {
-            if (!isNaN(contrib.latlng[0])) {
-                var type = contrib.types[0] || 'other';
-                L.marker(contrib.latlng, {'icon': icons[type]}).addTo(map).on('click', () => {
+        // Leaflet's retina test
+        var retina =
+            (window.devicePixelRatio || (window.screen.deviceXDPI / window.screen.logicalXDPI)) > 1 ? '@2x' : '';
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}{retina}.png?access_token={accessToken}', {
+            'id': 'guardian.10dec3bb',
+            'accessToken': 'pk.eyJ1IjoiZ3VhcmRpYW4iLCJhIjoiNHk1bnF4OCJ9.25tK75EuDdgq5GxQKyD6Fg',
+            'retina': retina
+        }).addTo(map);
+
+        var contributionMarkers = contributions.map((contrib, contributionId) => {
+            var type = contrib.types[0] || 'other';
+            // TODO: support icons[type]
+            if (!isNaN(contrib.latlng[0]) && icons[type]) {
+                var marker = L.marker(contrib.latlng, {'icon': icons[type]}).addTo(map);
+                marker.on('click', () => {
                     sendEvent('contribution', {'id': contributionId});
                 });
+                return marker;
+            }
+            return undefined;
+        });
+
+        window.addEventListener('contribution', evt => {
+            var contrib = contributions[evt.detail.id];
+            if (!isNaN(contrib.latlng[0])) {
+                var type = contrib.types[0] || 'other';
+                var marker = L.marker(contrib.latlng, {'pane': 'popupPane', 'icon': icons[type]}).addTo(map);
+                markerPane.classList.add('has-selected');
+                console.log(contributionMarkers[evt.detail.id]);
             }
         });
 
@@ -72,14 +95,8 @@ export default function Map(el, config, contributions) {
     window.addEventListener('resize', throttle(setContainerSize, 100));
     setContainerSize();
 
-    var link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('type', 'text/css');
-    link.setAttribute('href', 'https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css');
-    document.querySelector('head').appendChild(link);
-
     var script = document.createElement('script');
-    script.src = 'https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js';
+    script.src = config.assetPath + '/assets/leaflet.js';
     script.onload = () => init(window.L);
     document.body.appendChild(script);
 }

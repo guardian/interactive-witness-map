@@ -13,12 +13,24 @@
     display: none;
 }
 
-.leaflet-marker-pane[data-types=''] > .wm-pin {
-    display: block;
-}
+.leaflet-marker-pane {
+    transition: opacity 0.2s ease-out;
 
-@each $type in map-keys($types) {
-    .leaflet-marker-pane[data-types~='#{$type}'] > .wm-pin--#{$type} {
+    &.has-selected {
+        opacity: 0.5;
+    }
+
+    &[data-types=''] > .wm-pin {
         display: block;
     }
+
+    @each $type in map-keys($types) {
+        &[data-types~='#{$type}'] > .wm-pin--#{$type} {
+            display: block;
+        }
+    }
+}
+
+.leaflet-popup-pane > .wm-pin {
+    display: block;
 }
