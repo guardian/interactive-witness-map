@@ -42,7 +42,7 @@ export default function Map(el, config, contributions) {
             // TODO: support icons[type]
             if (contrib.latlng[0] && icons[type]) {
                 return L.circleMarker(contrib.latlng, {
-                    'className': 'wm-pin wm-pin--' + type,
+                    'className': 'wm-pin ' + contrib.types.map(type => 'wm-pin--' + type).join(' '),
                     'radius': 7,
                     'stroke': false
                 }).addTo(map).on('click', () => {

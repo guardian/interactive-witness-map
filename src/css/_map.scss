@@ -46,10 +46,11 @@
         pointer-events: auto;
     }
 
-    @each $type in map-keys($types) {
+    @each $type, $color in $types {
         &[data-types~='#{$type}'] .wm-pin--#{$type} {
             opacity: 0.8;
             pointer-events: auto;
+            fill: $color;
         }
     }
 }
