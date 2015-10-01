@@ -9,16 +9,6 @@ export default function Map(el, config, contributions) {
     var map, overlayPane, currentVisibleTypes = [];
 
     function init(L) {
-        var icons = {};
-        types.forEach(type => {
-            icons[type] = L.icon({
-                'iconUrl': `${config.assetPath}/assets/imgs/pin-${type}.png`,
-                'iconSize': [25, 31],
-                'iconAnchor': [13, 31],
-                'className': `wm-pin wm-pin--${type}`
-            });
-        });
-
         map = L.map(el, {
             'zoom': 6,
             'minZoom': 4,
@@ -38,18 +28,20 @@ export default function Map(el, config, contributions) {
         }).addTo(map);
 
         var contributionMarkers = contributions.map((contrib, contributionId) => {
-            var type = contrib.types[0] || 'other';
-            // TODO: support icons[type]
-            if (contrib.latlng[0] && icons[type]) {
+            if (!contrib.latlng[0]) return undefined;
+
+            var markers = contrib.types.map(type => {
                 return L.circleMarker(contrib.latlng, {
-                    'className': 'wm-pin ' + contrib.types.map(type => 'wm-pin--' + type).join(' '),
+                    'className': 'wm-pin wm-pin--' + type,
                     'radius': 7,
-                    'stroke': false
-                }).addTo(map).on('click', () => {
-                    sendEvent('contribution', {'id': contributionId});
+                    'color': 'white',
+                    'weight': 1
                 });
-            }
-            return undefined;
+            });
+
+            return L.featureGroup(markers).addTo(map).on('click', () => {
+                sendEvent('contribution', {'id': contributionId});
+            });
         });
 
         var selectedMarker;
@@ -60,11 +52,9 @@ export default function Map(el, config, contributions) {
                 map.flyTo(contrib.latlng);
 
                 if (selectedMarker) {
-                    selectedMarker.setRadius(7);
-                    selectedMarker.getElement().classList.remove('is-selected');
+                    selectedMarker.setStyle({'radius': 7, 'color': 'white', 'weight': 1});
                 }
-                marker.setRadius(14);
-                marker.getElement().classList.add('is-selected');
+                marker.setStyle({'radius': 14, 'color': '#333', 'weight': 1.5});
                 marker.bringToFront();
                 selectedMarker = marker;
             }

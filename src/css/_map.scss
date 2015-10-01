@@ -18,19 +18,12 @@
     transition: opacity 0.1s ease-out;
     pointer-events: none;
 
-    stroke: white;
-    stroke-width: 1;
     fill-opacity: 1;
 
     @each $type, $color in $types {
         &.wm-pin--#{$type} {
             fill: $color;
         }
-    }
-
-    &.is-selected {
-        stroke: #333;
-        stroke-width: 2;
     }
 }
 
@@ -50,7 +43,6 @@
         &[data-types~='#{$type}'] .wm-pin--#{$type} {
             opacity: 0.8;
             pointer-events: auto;
-            fill: $color;
         }
     }
 }
