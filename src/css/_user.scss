@@ -106,11 +106,13 @@
         border-bottom: 0;
     }
 
+    p, h3 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     &:not(.is-selected) {
         p, h3 {
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
     }
 
