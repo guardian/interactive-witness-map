@@ -123,6 +123,8 @@
     &.is-not-result {
         background-color: #eaeaea;
     }
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 .wm-contributions.type--all > .wm-contributions__item {
