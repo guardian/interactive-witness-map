@@ -49,10 +49,18 @@
                         <li class="wm-type-bubbles__type {{?contrib.types.indexOf(type) > -1}}wm-type-bubbles__type--{{=type}}{{?}}"></li>
                     {{~}}
                 </ul>
+                <div class="wm-contributions__item__expand">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill="currentColor" d="m 0,8 20,0 0,4 -20,0 0,-4 z" />
+                        <path class="plus-path" fill="currentColor" d="m 8,0 0,20 4,0 0,-20 -4,0 z" />
+                    </svg>
+                </div>
                 <h3 class="wm-contributions__item__name">{{=contrib.name}}</h3>
                 <p class="wm-contributions__item__address">
                     {{=contrib.address}}
-                    <a href="http://maps.google.com/maps/?q=loc:{{=contrib.latlng.join(',')}}">Show map</a>
+                    {{?contrib.latlng[0]}}
+                        <a href="http://maps.google.com/maps/?q=loc:{{=contrib.latlng.join(',')}}">(show map)</a>
+                    {{?}}
                 </p>
                 <div class="wm-contributions__item__detail">
                     {{?contrib.link}}

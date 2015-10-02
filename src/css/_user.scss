@@ -144,6 +144,33 @@
     }
 }
 
+.wm-contributions__item__expand {
+    float: left;
+    border-radius: 20px;
+    border: 1px solid #333;
+    padding: 4px;
+    margin: 1px 5px 0 0;
+    margin-right: 5px;
+
+    & > svg {
+        display: block;
+        width: 8px;
+        height: 8px;
+
+    }
+
+    .plus-path {
+        transition: opacity 0.1s ease-out;
+    }
+    .is-selected & .plus-path {
+        opacity: 0;
+    }
+
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .wm-contributions__item__name {
     @include fs-bodyHeading(1);
     margin: 0 0 3px 0;
@@ -159,7 +186,7 @@
         display: none;
         @include mq($until: tablet) {
             .is-selected & {
-                display: block;
+                display: inline;
             }
         }
     }
