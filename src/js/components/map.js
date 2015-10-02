@@ -66,7 +66,10 @@ export default function Map(el, config, contributions) {
                 if (radiusCircle) map.removeLayer(radiusCircle);
                 radiusCircle = L.circle(evt.detail.latlng, {
                     'radius': common.threshold,
-                    'interactive': false
+                    'interactive': false,
+                    'color': '#94b1ca',
+                    'weight': 2,
+                    'dashArray': '1,4'
                 }).addTo(map).bringToBack();
             }
         });
