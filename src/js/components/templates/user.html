@@ -19,10 +19,7 @@
     <ul class="wm-types">
         {{~it.types :type:i}}
             <li class="wm-types__type">
-                <label>
-                    <input class="js-type" type="checkbox" data-type="{{=type}}" />
-                    <span class="wm-types__type__text wm-types__type__text--{{=type}}">{{=type}}</span>
-                </label>
+                <button data-type="{{=type}}" class="wm-types__type__text wm-types__type__text--{{=type}} js-type">{{=type}}</button>
             </li>
         {{~}}
     </ul>

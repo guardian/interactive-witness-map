@@ -40,6 +40,7 @@ export default function User(el, contributions, onTypeChange) {
             } else {
                 enabledTypes.push(type);
             }
+            typeEl.classList.toggle('is-selected', index === -1);
             contributionsEl.classList.toggle(`type--${type}`, index === -1);
             contributionsEl.classList.toggle('type--all', enabledTypes.length === 0);
 

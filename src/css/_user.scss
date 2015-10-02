@@ -214,26 +214,18 @@
 }
 
 .wm-types__type {
-    padding: 0;
+    padding: 0 0 4px 0;
     display: inline-block;
 
     input[type=checkbox] {
         display: none;
     }
-
-    @each $type, $color in $types {
-        input[type=checkbox]:checked + .wm-types__type__text.wm-types__type__text--#{$type} {
-            color: white;
-            background-color: $color;
-            &::before {
-                background-color: white;
-            }
-        }
-    }
 }
 
 .wm-types__type__text {
-    padding: 4px 10px 4px 3px;
+    border: 0;
+    outline: 0;
+    padding: 0 10px 0 3px;
     border-radius: 100px;
     color: #767676;
     background-color: #f1f1f1;
@@ -257,6 +249,14 @@
     @each $type, $color in $types {
         &.wm-types__type__text--#{$type}::before {
             background-color: $color;
+        }
+
+        &.wm-types__type__text--#{$type}.is-selected {
+            color: white;
+            background-color: $color;
+            &::before {
+                background-color: white;
+            }
         }
     }
 
