@@ -1,4 +1,5 @@
 import reqwest from 'reqwest'
+import bowser from 'ded/bowser'
 
 import User from './components/user'
 import Map from './components/map'
@@ -8,7 +9,7 @@ import mainHTML from './templates/main.html!text'
 // Polyfills
 import './lib/classList'
 
-const contentURL = 'https://interactive.guim.co.uk/docsdata-test/1f8nQa19Q0VMveMuPnfDFYBfh5IKRkP8APm5cLsyvXNk.json';
+const contentURL = (bowser.msie && bowser.version < 10 ? '//' : 'https://') + 'interactive.guim.co.uk/docsdata-test/1f8nQa19Q0VMveMuPnfDFYBfh5IKRkP8APm5cLsyvXNk.json';
 
 function pad(n) {
     return (n < 10 ? '0' : '') + n;
