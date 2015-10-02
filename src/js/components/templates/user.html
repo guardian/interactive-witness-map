@@ -38,20 +38,23 @@
         <span class="js-results-text"></span>
     </p>
     <ul class="wm-contributions js-contributions">
-        {{~it.contributions :contribution:i}}
-            <li class="wm-contributions__item js-contribution {{~contribution.types :type:j}} type--{{=type}}{{~}}">
+        {{~it.contributions :contrib:i}}
+            <li class="wm-contributions__item js-contribution {{~contrib.types :type:j}} type--{{=type}}{{~}}">
                 <ul class="wm-type-bubbles">
                     {{~it.types :type:j}}
-                        <li class="wm-type-bubbles__type {{?contribution.types.indexOf(type) > -1}}wm-type-bubbles__type--{{=type}}{{?}}"></li>
+                        <li class="wm-type-bubbles__type {{?contrib.types.indexOf(type) > -1}}wm-type-bubbles__type--{{=type}}{{?}}"></li>
                     {{~}}
                 </ul>
-                <h3 class="wm-contributions__item__name">{{=contribution.name}}</h3>
-                <p style="color: #767676">{{=contribution.address}}</p>
+                <h3 class="wm-contributions__item__name">{{=contrib.name}}</h3>
+                <p class="wm-contributions__item__address">
+                    {{=contrib.address}}
+                    <a href="http://maps.google.com/maps?daddr={{=contrib.latlng.join(',')}}">Show map</a>
+                </p>
                 <div class="wm-contributions__item__detail">
-                    {{?contribution.link}}
-                        <p><a href="{{=contribution.link}}">{{=contribution.link}}</a></p>
+                    {{?contrib.link}}
+                        <p><a href="{{=contrib.link}}">{{=contrib.link}}</a></p>
                     {{?}}
-                    <p style="white-space: normal">{{=contribution.oneline || contribution.description}}</p>
+                    <p style="white-space: normal">{{=contrib.oneline || contrib.description}}</p>
                 </div>
             </li>
         {{~}}

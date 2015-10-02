@@ -148,6 +148,18 @@
     }
 }
 
+.wm-contributions__item__address {
+    color: #767676;
+    a {
+        display: none;
+        @include mq($until: tablet) {
+            .is-selected & {
+                display: block;
+            }
+        }
+    }
+}
+
 .wm-contributions__item__detail {
     display: none;
     .is-selected > & {
