@@ -55,6 +55,11 @@
     line-height: 1;
 }
 
+.wm-disclaimer {
+    @include fs-textSans(1);
+    color: #767676;
+}
+
 .wm-contribution-results {
     @include fs-textSans(1);
     color: #767676;
