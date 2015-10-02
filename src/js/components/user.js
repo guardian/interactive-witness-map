@@ -98,10 +98,15 @@ export default function User(el, contributions, onTypeChange) {
     window.addEventListener('location', evt => {
         var latlng = evt.detail.latlng;
         var count = 0;
+        var topContributionEl = contributionsEl.childNodes[0];
         contributions.forEach((contrib, contributionId) => {
             var isResult = distance(contrib.latlng, latlng) < common.threshold;
-            contributionEls[contributionId].classList.toggle('is-not-result', !isResult);
-            count += isResult;
+            var contributionEl = contributionEls[contributionId];
+            contributionEl.classList.toggle('is-not-result', !isResult);
+            if (isResult) {
+                contributionsEl.insertBefore(contributionEl, topContributionEl);
+                count++;
+            }
         });
         resultsEl.classList.add('has-results');
         resultsTextEl.textContent = `${count} result${count !== 1 ? 's' : ''} within 10 miles of your location`;

@@ -23,7 +23,8 @@ export default function Map(el, config, contributions) {
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}{retina}.png?access_token={accessToken}', {
             'id': 'guardian.10dec3bb',
             'accessToken': 'pk.eyJ1IjoiZ3VhcmRpYW4iLCJhIjoiNHk1bnF4OCJ9.25tK75EuDdgq5GxQKyD6Fg',
-            'retina': retina
+            'retina': retina,
+            'attribution': '<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, © <a href="http://mapbox.com">Mapbox</a>'
         }).addTo(map);
 
         var contributionMarkers = contributions.map((contrib, contributionId) => {

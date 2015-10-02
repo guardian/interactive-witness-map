@@ -106,10 +106,12 @@
         border-bottom: 0;
     }
 
-    p, h3 {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    &:not(.is-selected) {
+        p, h3 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     display: none;
@@ -119,9 +121,7 @@
     }
 
     &.is-not-result {
-        @include mq($until: tablet) {
-            display: none !important;
-        }
+        background-color: #eaeaea;
     }
 }
 
@@ -138,11 +138,14 @@
 .wm-contributions__item__name {
     @include fs-bodyHeading(1);
     margin: 0 0 3px 0;
+
+    .is-not-result & {
+        color: #767676;
+    }
 }
 
 .wm-contributions__item__detail {
     display: none;
-    white-space: auto;
     .is-selected > & {
         display: block;
     }
@@ -157,8 +160,7 @@
 
     &::before {
         content: "Filter by";
-        display: block;
-        margin-bottom: 3px;
+        margin: 0 3px 3px 0;
         line-height: 1;
     }
 }
