@@ -10,6 +10,10 @@ import './lib/classList'
 
 const contentURL = 'https://interactive.guim.co.uk/docsdata-test/1f8nQa19Q0VMveMuPnfDFYBfh5IKRkP8APm5cLsyvXNk.json';
 
+function pad(n) {
+    return (n < 10 ? '0' : '') + n;
+}
+
 export function init(el, context, config, mediator) {
     el.innerHTML = mainHTML;
 
@@ -18,13 +22,17 @@ export function init(el, context, config, mediator) {
         type: 'json',
         crossOrigin: true,
         success: resp => {
-            resp.sheets.contributions.forEach(contribution => {
-                contribution.types = contribution.types.split(',');
+            var date = new Date();
+            var today = date.getUTCFullYear() + '-' + pad(date.getUTCMonth() + 1) + '-' + pad(date.getUTCDate());
+            var contributions = resp.sheets.contributions.filter(c => !c.enddate || c.enddate >= today);
+
+            contributions.forEach(contribution => {
+                contribution.types = contribution.types.split(',').map(t => t.toLowerCase().trim()).filter(t => !!t);
                 if (contribution.other) contribution.types.push('other');
                 contribution.latlng = [parseFloat(contribution.latitude), parseFloat(contribution.longitude)];
             });
 
-            app(resp.sheets.contributions);
+            app(contributions);
         }
     });
 
