@@ -1,9 +1,8 @@
 import bowser from 'ded/bowser'
+import common from '../lib/common'
 import throttle from '../lib/throttle'
 import isMobile from '../lib/isMobile'
 import sendEvent from '../lib/event'
-
-const types = ['collection', 'drop-off', 'vigil', 'fundraising', 'other'];
 
 export default function Map(el, config, contributions) {
     var map, overlayPane, currentVisibleTypes = [];
@@ -60,8 +59,23 @@ export default function Map(el, config, contributions) {
             }
         });
 
+        var radiusCircle;
         window.addEventListener('location', evt => {
             map.flyTo(evt.detail.latlng, 10);
+            if (evt.detail.type === 'user') {
+                if (radiusCircle) map.removeLayer(radiusCircle);
+                radiusCircle = L.circle(evt.detail.latlng, {
+                    'radius': common.threshold,
+                    'interactive': false
+                }).addTo(map).bringToBack();
+            }
+        });
+
+        window.addEventListener('clear', () => {
+            if (radiusCircle) {
+                map.removeLayer(radiusCircle);
+                radiusCircle = null;
+            }
         });
 
         overlayPane = map.getPane('overlayPane');

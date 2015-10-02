@@ -55,6 +55,26 @@
     line-height: 1;
 }
 
+.wm-contribution-results {
+    @include fs-textSans(1);
+    color: #767676;
+    margin: 0;
+    border-bottom: 1px dotted #dcdcdc;
+    padding: 10px 10px;
+    @include mq(mobileLandscape) {
+        padding: 10px 20px;
+    }
+
+    display: none;
+    &.has-results {
+        display: block;
+    }
+}
+
+.wm-contribution-results__clear {
+    float: right;
+}
+
 .wm-contributions {
     position: relative;
     list-style: none;
@@ -96,6 +116,12 @@
 
     &.is-selected {
         background-color: #f1f1f1;
+    }
+
+    &.is-not-result {
+        @include mq($until: tablet) {
+            display: none !important;
+        }
     }
 }
 

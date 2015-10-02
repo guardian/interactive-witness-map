@@ -34,6 +34,10 @@
     </p>
 </div>
 <div class="wm-user__panel">
+    <p class="wm-contribution-results js-results">
+        <a href="#" class="wm-contribution-results__clear js-clear">Clear</a>
+        <span class="js-results-text"></span>
+    </p>
     <ul class="wm-contributions js-contributions">
         {{~it.contributions :contribution:i}}
             <li class="wm-contributions__item js-contribution {{~contribution.types :type:j}} type--{{=type}}{{~}}">
