@@ -7,7 +7,7 @@ import geocode from '../lib/geocode'
 
 import template from './templates/user.html!text'
 
-const types = ['collection', 'drop-off', 'vigil', 'demonstration', 'other'];
+const types = ['collection', 'drop-off', 'vigil', 'fundraising', 'other'];
 
 var templateFn = doT.template(template);
 

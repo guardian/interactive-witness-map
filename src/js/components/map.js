@@ -3,7 +3,7 @@ import throttle from '../lib/throttle'
 import isMobile from '../lib/isMobile'
 import sendEvent from '../lib/event'
 
-const types = ['collection', 'drop-off', 'vigil', 'demonstration', 'other'];
+const types = ['collection', 'drop-off', 'vigil', 'fundraising', 'other'];
 
 export default function Map(el, config, contributions) {
     var map, overlayPane, currentVisibleTypes = [];

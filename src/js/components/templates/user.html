@@ -48,7 +48,7 @@
                     {{?contribution.link}}
                         <p><a href="{{=contribution.link}}">{{=contribution.link}}</a></p>
                     {{?}}
-                    <p style="white-space: normal">{{=contribution.description}}</p>
+                    <p style="white-space: normal">{{=contribution.oneline || contribution.description}}</p>
                 </div>
             </li>
         {{~}}
