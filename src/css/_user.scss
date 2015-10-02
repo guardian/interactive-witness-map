@@ -232,6 +232,8 @@
     cursor: pointer;
     line-height: 25px;
 
+    -webkit-tap-highlight-color: transparent;
+
     &::before {
         content: "";
         display: inline-block;
