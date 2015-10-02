@@ -48,7 +48,7 @@
                 <h3 class="wm-contributions__item__name">{{=contrib.name}}</h3>
                 <p class="wm-contributions__item__address">
                     {{=contrib.address}}
-                    <a href="http://maps.google.com/maps?daddr={{=contrib.latlng.join(',')}}">Show map</a>
+                    <a href="http://maps.google.com/maps/?q=loc:{{=contrib.latlng.join(',')}}">Show map</a>
                 </p>
                 <div class="wm-contributions__item__detail">
                     {{?contrib.link}}
