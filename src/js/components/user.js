@@ -49,8 +49,17 @@ export default function User(el, contributions, onTypeChange) {
     });
 
     var contributionEls = $$('.js-contribution');
+    var lastContributionId;
     contributionEls.forEach((contributionEl, contributionId) => {
-        contributionEl.addEventListener('click', () => sendEvent('contribution', {'id': contributionId}));
+        contributionEl.addEventListener('click', () => {
+            if (contributionId === lastContributionId) {
+                sendEvent('hide-contribution');
+                lastContributionId = -1;
+            } else {
+                sendEvent('show-contribution', {'id': contributionId})
+                lastContributionId = contributionId;
+            }
+        });
     });
 
     var clearEl = el.querySelector('.js-clear');
@@ -82,9 +91,13 @@ export default function User(el, contributions, onTypeChange) {
     }
 
     var currentContributionEl;
-    window.addEventListener('contribution', evt => {
+    window.addEventListener('hide-contribution', () => {
+        currentContributionEl.classList.remove('is-selected');
+        currentContributionEl = null;
+    });
+    window.addEventListener('show-contribution', evt => {
         var contributionEl = contributionEls[evt.detail.id];
-        if (currentContributionEl && currentContributionEl !== contributionEl) {
+        if (currentContributionEl) {
             currentContributionEl.classList.remove('is-selected');
         }
 

@@ -40,12 +40,18 @@ export default function Map(el, config, contributions) {
             });
 
             return L.featureGroup(markers).addTo(map).on('click', () => {
-                sendEvent('contribution', {'id': contributionId});
+                sendEvent('show-contribution', {'id': contributionId});
             });
         });
 
         var selectedMarker;
-        window.addEventListener('contribution', evt => {
+        window.addEventListener('hide-contribution', () => {
+            if (selectedMarker) {
+                selectedMarker.setStyle({'radius': 7, 'color': 'white', 'weight': 1});
+                selectedMarker = null;
+            }
+        });
+        window.addEventListener('show-contribution', evt => {
             var contrib = contributions[evt.detail.id];
             var marker = contributionMarkers[evt.detail.id];
             if (marker) {
