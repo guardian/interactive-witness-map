@@ -11,7 +11,7 @@ import template from './templates/user.html!text'
 
 var templateFn = doT.template(template);
 
-var shareFn = share('How can you help the refugee crisis?', 'http://gu.com/p/4cyz6', '#refugee');
+var shareFn = share('How can you help the refugee crisis?', 'http://www.theguardian.com/world/ng-interactive/2015/oct/03/refugee-help-efforts', '#refugee');
 
 export default function User(el, contributions, onTypeChange) {
     var $$ = s => [].slice.apply(el.querySelectorAll(s));
