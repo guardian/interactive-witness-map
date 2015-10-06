@@ -9,7 +9,7 @@ import mainHTML from './templates/main.html!text'
 // Polyfills
 import './lib/classList'
 
-const contentURL = (bowser.msie && bowser.version < 10 ? '//' : 'https://') + 'interactive.guim.co.uk/docsdata-test/1f8nQa19Q0VMveMuPnfDFYBfh5IKRkP8APm5cLsyvXNk.json';
+const contentURL = (bowser.msie && bowser.version < 10 ? '//' : 'https://') + 'interactive.guim.co.uk/docsdata/1f8nQa19Q0VMveMuPnfDFYBfh5IKRkP8APm5cLsyvXNk.json';
 
 function pad(n) {
     return (n < 10 ? '0' : '') + n;
